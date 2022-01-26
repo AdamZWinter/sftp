@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ $1 = "preconfigured" ]; then
-    exec /usr/sbin/sshd -D -e
-fi
+#if [ $1 = "preconfigured" ]; then
+#    exec /usr/sbin/sshd -D -e
+#fi
 # -D Do not detach and become daemon.
 #  -e Write debug logs to standard error. This could be used for debugging.
 
@@ -52,9 +52,25 @@ if [ ! -f "$userConfFinalPath" ]; then
         done
     fi
 
-    if [ -n "$SFTP_USERS" ]; then
+    if [ -n "$VISUS_USER" ]; then
         # Append users from environment variable to final config
-        IFS=" " read -r -a usersFromEnv <<< "$SFTP_USERS"
+        IFS=" " read -r -a usersFromEnv <<< "$VISUS_USER"
+        for user in "${usersFromEnv[@]}"; do
+            echo "$user" >> "$userConfFinalPath"
+        done
+    fi
+    
+    if [ -n "$MANDS_USER" ]; then
+        # Append users from environment variable to final config
+        IFS=" " read -r -a usersFromEnv <<< "$MANDS_USER"
+        for user in "${usersFromEnv[@]}"; do
+            echo "$user" >> "$userConfFinalPath"
+        done
+    fi
+    
+    if [ -n "$KONAN_USER" ]; then
+        # Append users from environment variable to final config
+        IFS=" " read -r -a usersFromEnv <<< "$KONAN_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
         done
