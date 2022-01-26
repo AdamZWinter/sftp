@@ -1,0 +1,216 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "existingStorageAccountResourceGroupName": {
+	    "defaultValue": "sftpStorageGroup",
+            "type": "String",
+            "metadata": {
+                "description": "Resource group for existing storage account"
+            }
+        },
+        "existingStorageAccountName": {
+	    "defaultValue": "sftpstgbku3psz56gk46",
+            "type": "String",
+            "metadata": {
+                "description": "Name of existing storage account"
+            }
+        },
+        "existingFileShareName": {
+	    "defaultValue": "sftpfileshare",
+            "type": "String",
+            "metadata": {
+                "description": "Name of existing file share to be mounted"
+            }
+        },
+		"containerImage": {
+	    "defaultValue": "sftpcontainerregistry.azurecr.io/sftp03/sftpvisus:0.02",
+            "type": "String",
+            "metadata": {
+                "description": "Image in container registry"
+            }
+        },
+        "visusPassword": {
+	    "defaultValue": "ChangeTHIS",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Password for Visus"
+            }
+        },
+        "emberonePassword": {
+	    "defaultValue": "ChangeTHIS",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Password for Ember One"
+            }
+        },
+        "mandsPassword": {
+	    "defaultValue": "ChangeTHIS",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Password for M and S"
+            }
+        },
+        "konanPassword": {
+	    "defaultValue": "ChangeTHIS",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Password for Konan"
+            }
+        },
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "String",
+            "metadata": {
+                "description": "Primary location for resources"
+            }
+        },
+        "subnetID": {
+	    "defaultValue": "/subscriptions/558ee573-d839-46d5-9bd9-8cac33495610/resourceGroups/sftprg03/providers/Microsoft.Network/virtualNetworks/sftpnetwork03/subnets/sftpsubnet03",
+            "type": "String",
+            "metadata": {
+                "description": "Subnet ID for the subnet the container will be deployed to."
+            }
+        },
+        "subnetName": {
+            "defaultValue": "sftpsubnet03",
+            "type": "String",
+            "metadata": {
+                "description": "Name of subnet to use.  Must be in this resource group."
+            }
+        }
+    },
+    "variables": {
+        "sftpContainerName": "sftpcontainer",
+        "sftpContainerGroupName": "sftpcontainergroup",
+        "sftpContainerImage": "[parameters('containerImage')]",
+        "visusEnvVariable": "[concat('visus:', parameters('visusPassword'), ':1001')]",
+        "emberoneEnvVariable": "[concat('emberone:', parameters('emberonePassword'), ':1002')]",
+		"mandsEnvVariable": "[concat('mands:', parameters('mandsPassword'), ':1003')]",
+		"konanEnvVariable": "[concat('konan:', parameters('konanPassword'), ':1004')]",
+        "storageAccountId": "[resourceId(parameters('existingStorageAccountResourceGroupName'), 'Microsoft.Storage/storageAccounts', parameters('existingStorageAccountName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "pid-18f281fe-d1e1-502c-8b87-d945383dc75b",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-09-01",
+            "name": "[variables('sftpContainerGroupName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "containers": [
+                    {
+                        "name": "[variables('sftpContainerName')]",
+                        "properties": {
+                            "image": "[variables('sftpContainerImage')]",
+                            "environmentVariables": [
+                                {
+                                    "name": "VISUS_USER",
+                                    "value": "[variables('visusEnvVariable')]"
+                                },
+                                {
+                                    "name": "EO_USER",
+                                    "value": "[variables('emberoneEnvVariable')]"
+                                },
+								{
+                                    "name": "MANDS_USER",
+                                    "value": "[variables('mandsEnvVariable')]"
+                                },
+								{
+                                    "name": "KONAN_USER",
+                                    "value": "[variables('konanEnvVariable')]"
+                                }
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "cpu": 1,
+                                    "memoryInGB": 1
+                                }
+                            },
+                            "ports": [
+                                {
+                                    "port": 22,
+                                    "protocol": "TCP"
+                                }
+                            ],
+                            "volumeMounts": [
+                                {
+                                    "mountPath": "[concat('/home/', 'mands/data')]",
+                                    "name": "mandsvolume",
+                                    "readOnly": false
+                                },
+                                {
+                                    "mountPath": "[concat('/home/', 'konan/data')]",
+                                    "name": "konanvolume",
+                                    "readOnly": false
+                                }
+                            ]
+                        }
+                    }
+                ],
+				"imageRegistryCredentials": [
+  					{
+    					"server": "sftpcontainerregistry.azurecr.io",
+    					"username": "sftpContainerRegistry",
+    					"password": "7olR=FGHIDIWs4Xkl9Er9toBoMm5zuS3"
+  					}
+				],
+                "osType": "Linux",
+                "ipAddress": {
+                    "type": "Private",
+                    "ports": [
+                        {
+                            "protocol": "Tcp",
+                            "port": 22
+                        }
+                    ]
+                },
+                "restartPolicy": "OnFailure",
+		"subnetIds": [
+		    {
+			"id":"[parameters('subnetID')]",
+			"name":"[parameters('subnetName')]"
+		    }
+		],
+                "volumes": [
+                    {
+                        "name": "mandsvolume",
+                        "azureFile": {
+                            "readOnly": false,
+                            "shareName": "[parameters('existingFileShareName')]",
+                            "storageAccountName": "[parameters('existingStorageAccountName')]",
+                            "storageAccountKey": "[listKeys(variables('storageAccountId'),'2018-02-01').keys[0].value]"
+                        }	
+                    },
+                    {
+                        "name": "konanvolume",
+                        "azureFile": {
+                            "readOnly": false,
+                            "shareName": "[parameters('existingFileShareName')]",
+                            "storageAccountName": "[parameters('existingStorageAccountName')]",
+                            "storageAccountKey": "[listKeys(variables('storageAccountId'),'2018-02-01').keys[0].value]"
+                        }	
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "containerIPv4Address": {
+            "type": "String",
+            "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups/', variables('sftpContainerGroupName'))).ipAddress.ip]"
+        }
+    }
+}
