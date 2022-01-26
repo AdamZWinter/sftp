@@ -15,7 +15,7 @@ AllowTcpForwarding no
 
 # Force sftp and chroot jail
 Match Group sftpusers
-  Subsystem sftp internal-sftp
+#  Subsystem sftp internal-sftp
   ForceCommand internal-sftp
   ChrootDirectory %h
 
