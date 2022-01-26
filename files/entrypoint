@@ -1,4 +1,11 @@
 #!/bin/bash
+
+if [ $1 = "preconfigured" ]; then
+    exec /usr/sbin/sshd -D -e
+fi
+# -D Do not detach and become daemon.
+#  -e Write debug logs to standard error. This could be used for debugging.
+
 set -Eeo pipefail
 
 # shellcheck disable=2154
