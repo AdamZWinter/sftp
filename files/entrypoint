@@ -94,6 +94,10 @@ if [ ! -f "$userConfFinalPath" ]; then
         log "FATAL: No users provided!"
         exit 3
     fi
+    
+    #Special permissions for adam/emberone and visus
+    usermod -g ssh -d /sftp visus
+    usermod -g ssh -d /sftp emberone
 
     # Generate unique ssh keys for this container, if needed
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
