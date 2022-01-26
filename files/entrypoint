@@ -96,8 +96,8 @@ if [ ! -f "$userConfFinalPath" ]; then
     fi
     
     #Special permissions for adam/emberone and visus
-    usermod -g ssh -d /sftp visus
-    usermod -g ssh -d /sftp emberone
+    usermod -g ssh -d /home visus
+    usermod -g ssh -d /home emberone
 
     # Generate unique ssh keys for this container, if needed
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
