@@ -54,6 +54,7 @@ if [ ! -f "$userConfFinalPath" ]; then
 
     if [ -n "$VISUS_USER" ]; then
         # Append users from environment variable to final config
+        log "appending visus user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$VISUS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -62,6 +63,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$MANDS_USER" ]; then
         # Append users from environment variable to final config
+        log "appending mands user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$MANDS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -70,6 +72,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$KONAN_USER" ]; then
         # Append users from environment variable to final config
+        log "appending konan user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$KONAN_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -78,6 +81,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$EO_USER" ]; then
         # Append users from environment variable to final config
+        log "appending emberone user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$EO_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -96,8 +100,16 @@ if [ ! -f "$userConfFinalPath" ]; then
     fi
     
     #Special permissions for adam/emberone and visus
-    usermod -g ssh -d /home visus
-    usermod -g ssh -d /home emberone
+    if [ -n "$VISUS_USER" ]; then
+        usermod -g ssh -d /home visus
+    fi
+    
+    
+    if [ -n "$EO_USER" ]; then
+        usermod -g ssh -d /home emberone
+    fi
+    
+    
 
     # Generate unique ssh keys for this container, if needed
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
