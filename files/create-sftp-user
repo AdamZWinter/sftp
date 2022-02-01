@@ -65,7 +65,9 @@ if [ -n "$gid" ]; then
     useraddOptions+=(--gid "$gid")
 fi
 
+log "adding user"
 useradd "${useraddOptions[@]}" "$user"
+long "changing user group to 110"
 usermod -g 110 "$user"
 mkdir -p "/home/$user"
 chown root:root "/home/$user"
@@ -76,8 +78,10 @@ chmod 755 "/home/$user"
 uid="$(id -u "$user")"
 
 if [ -n "$pass" ]; then
+    log "changing user password"
     echo "$user:$pass" | chpasswd $chpasswdOptions
 else
+    log "No password in variable, password is disabled"
     usermod -p "*" "$user" # disabled password
 fi
 
