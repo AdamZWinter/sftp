@@ -67,7 +67,7 @@ fi
 
 log "adding user"
 useradd "${useraddOptions[@]}" "$user"
-long "changing user group to 110"
+log "changing user group to 110"
 usermod -g 110 "$user"
 mkdir -p "/home/$user"
 chown root:root "/home/$user"
