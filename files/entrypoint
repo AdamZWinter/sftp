@@ -19,7 +19,7 @@ userConfPath="/etc/sftp/users.conf"
 userConfPathLegacy="/etc/sftp-users.conf"
 userConfFinalPath="/var/run/sftp/users.conf"
 
-tagv="tag04"
+tagv="tag05"
 
 function log() {
     echo "[$0] $*" >&2
