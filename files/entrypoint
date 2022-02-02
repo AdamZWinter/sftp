@@ -19,6 +19,8 @@ userConfPath="/etc/sftp/users.conf"
 userConfPathLegacy="/etc/sftp-users.conf"
 userConfFinalPath="/var/run/sftp/users.conf"
 
+tagv="tag04"
+
 function log() {
     echo "[$0] $*" >&2
 }
@@ -54,7 +56,7 @@ if [ ! -f "$userConfFinalPath" ]; then
 
     if [ -n "$VSS_USER" ]; then
         # Append users from environment variable to final config
-        log "appending visus user to final config file"
+        log "$tagv appending visus user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$VSS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -63,7 +65,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$MNS_USER" ]; then
         # Append users from environment variable to final config
-        log "appending mands user to final config file"
+        log "$tagv appending mands user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$MNS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -72,7 +74,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$KNN_USER" ]; then
         # Append users from environment variable to final config
-        log "appending konan user to final config file"
+        log "$tagv appending konan user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$KNN_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -81,7 +83,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     
     if [ -n "$EO_USER" ]; then
         # Append users from environment variable to final config
-        log "appending emberone user to final config file"
+        log "$tagv appending emberone user to final config file"
         IFS=" " read -r -a usersFromEnv <<< "$EO_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
@@ -138,7 +140,7 @@ if [ -d /etc/sftp.d ]; then
 fi
 
 if $startSshd; then
-    log "Executing sshd"
+    log "$tagv Executing sshd"
     exec /usr/sbin/sshd -D -e
 else
     log "Executing $*"
