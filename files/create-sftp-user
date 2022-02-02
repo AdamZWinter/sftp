@@ -12,6 +12,8 @@ reGid='[[:digit:]]*'
 reDir='[^:]*'
 #reArgs="^($reUser)(:$rePass)(:e)?(:$reUid)?(:$reGid)?(:$reDir)?$"
 
+tagv="tag04"
+
 function log() {
     echo "[$0] $*"
 }
@@ -29,10 +31,10 @@ function validateArg() {
     fi
 }
 
-log "tag03 Parsing user data: \"$1\""
+log "$tagv Parsing user data: \"$1\""
 IFS=':' read -ra args <<< "$1"
 
-log "tag03 args parsed"
+log "$tagv args parsed"
 
 skipIndex=0
 chpasswdOptions=""
@@ -41,7 +43,7 @@ useraddOptions=(--no-user-group)
 user="${args[0]}"; validateArg "username" "$user" "$reUser" || exit 1
 pass="${args[1]}"; validateArg "password" "$pass" "$rePass" || exit 1
 
-log "tag03 user and pass validated"
+log "$tagv user and pass validated"
 
 if [ "${args[2]}" == "e" ]; then
     chpasswdOptions="-e"
@@ -52,7 +54,7 @@ uid="${args[$((skipIndex+2))]}"; validateArg "UID" "$uid" "$reUid" || exit 1
 gid="${args[$((skipIndex+3))]}"; validateArg "GID" "$gid" "$reGid" || exit 1
 dir="${args[$((skipIndex+4))]}"; validateArg "dirs" "$dir" "$reDir" || exit 1
 
-log "tag03 ids validated"
+log "$tagv ids validated"
 
 if getent passwd "$user" > /dev/null; then
     log "WARNING: User \"$user\" already exists. Skipping."
@@ -71,9 +73,9 @@ if [ -n "$gid" ]; then
     useraddOptions+=(--gid "$gid")
 fi
 
-log "tag03 adding user"
+log "$tagv adding user"
 useradd "${useraddOptions[@]}" "$user"
-log "tag03 changing user group to 110"
+log "$tagv changing user group to 110"
 usermod -g 110 "$user"
 mkdir -p "/home/$user"
 chown root:root "/home/$user"
@@ -84,10 +86,10 @@ chmod 755 "/home/$user"
 uid="$(id -u "$user")"
 
 if [ -n "$pass" ]; then
-    log "changing user password"
+    log "$tagv changing user password"
     echo "$user:$pass" | chpasswd $chpasswdOptions
 else
-    log "No password in variable, password is disabled"
+    log "$tagv No password in variable, password is disabled"
     usermod -p "*" "$user" # disabled password
 fi
 
