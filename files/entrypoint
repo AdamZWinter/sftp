@@ -52,28 +52,28 @@ if [ ! -f "$userConfFinalPath" ]; then
         done
     fi
 
-    if [ -n "$VISUS_USER" ]; then
+    if [ -n "$VSS_USER" ]; then
         # Append users from environment variable to final config
         log "appending visus user to final config file"
-        IFS=" " read -r -a usersFromEnv <<< "$VISUS_USER"
+        IFS=" " read -r -a usersFromEnv <<< "$VSS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
         done
     fi
     
-    if [ -n "$MANDS_USER" ]; then
+    if [ -n "$MNS_USER" ]; then
         # Append users from environment variable to final config
         log "appending mands user to final config file"
-        IFS=" " read -r -a usersFromEnv <<< "$MANDS_USER"
+        IFS=" " read -r -a usersFromEnv <<< "$MNS_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
         done
     fi
     
-    if [ -n "$KONAN_USER" ]; then
+    if [ -n "$KNN_USER" ]; then
         # Append users from environment variable to final config
         log "appending konan user to final config file"
-        IFS=" " read -r -a usersFromEnv <<< "$KONAN_USER"
+        IFS=" " read -r -a usersFromEnv <<< "$KNN_USER"
         for user in "${usersFromEnv[@]}"; do
             echo "$user" >> "$userConfFinalPath"
         done
@@ -99,14 +99,14 @@ if [ ! -f "$userConfFinalPath" ]; then
         exit 3
     fi
     
-    #Special permissions for adam/emberone and visus
-    if [ -n "$VISUS_USER" ]; then
-        usermod -g ssh -d /home visus
+    #Special permissions for adam/EO and vss
+    if [ -n "$VSS_USER" ]; then
+        usermod -g ssh -d /home "$VSS_USER"
     fi
     
     
     if [ -n "$EO_USER" ]; then
-        usermod -g ssh -d /home emberone
+        usermod -g ssh -d /home "$EO_USER"
     fi
     
     
