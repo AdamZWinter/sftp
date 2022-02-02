@@ -99,19 +99,7 @@ if [ ! -f "$userConfFinalPath" ]; then
     elif $startSshd; then
         log "FATAL: No users provided!"
         exit 3
-    fi
-    
-    #Special permissions for adam/EO and vss
-    if [ -n "$VSS_USER" ]; then
-        usermod -g ssh -d /home "$VSS_USER"
-    fi
-    
-    
-    if [ -n "$EO_USER" ]; then
-        usermod -g ssh -d /home "$EO_USER"
-    fi
-    
-    
+    fi    
 
     # Generate unique ssh keys for this container, if needed
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
