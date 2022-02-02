@@ -89,6 +89,21 @@ if [ ! -f "$userConfFinalPath" ]; then
             echo "$user" >> "$userConfFinalPath"
         done
     fi
+    
+    #Special permissions for adam/EO and vss
+    if [ -n "$VSS_USER" ]; then
+	    log "$tagv Parsing VSS_USER data"
+	    IFS=':' read -ra userargs <<< "$VSS_USER"
+        vssuser="${userargs[0]}"
+        usermod -g ssh -d /home "$vssuser"
+    fi
+    
+    if [ -n "$EO_USER" ]; then
+	    log "$tagv Parsing EO_USER data"
+	    IFS=':' read -ra userargs <<< "$EO_USER"
+        eouser="${userargs[0]}"
+        usermod -g ssh -d /home "$eouser"
+    fi
 
     # Check that we have users in config
     if [ -f "$userConfFinalPath" ] && [ "$(wc -l < "$userConfFinalPath")" -gt 0 ]; then
