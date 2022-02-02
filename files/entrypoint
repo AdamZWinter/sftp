@@ -89,6 +89,17 @@ if [ ! -f "$userConfFinalPath" ]; then
             echo "$user" >> "$userConfFinalPath"
         done
     fi
+
+    # Check that we have users in config
+    if [ -f "$userConfFinalPath" ] && [ "$(wc -l < "$userConfFinalPath")" -gt 0 ]; then
+        # Import users from final conf file
+        while IFS= read -r user || [[ -n "$user" ]]; do
+            create-sftp-user "$user"
+        done < "$userConfFinalPath"
+    elif $startSshd; then
+        log "FATAL: No users provided!"
+        exit 3
+    fi    
     
     #Special permissions for adam/EO and vss
     if [ -n "$VSS_USER" ]; then
@@ -104,17 +115,6 @@ if [ ! -f "$userConfFinalPath" ]; then
         eouser="${userargs[0]}"
         usermod -g ssh -d /home "$eouser"
     fi
-
-    # Check that we have users in config
-    if [ -f "$userConfFinalPath" ] && [ "$(wc -l < "$userConfFinalPath")" -gt 0 ]; then
-        # Import users from final conf file
-        while IFS= read -r user || [[ -n "$user" ]]; do
-            create-sftp-user "$user"
-        done < "$userConfFinalPath"
-    elif $startSshd; then
-        log "FATAL: No users provided!"
-        exit 3
-    fi    
 
     # Generate unique ssh keys for this container, if needed
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
