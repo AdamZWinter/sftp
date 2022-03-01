@@ -89,6 +89,15 @@ if [ ! -f "$userConfFinalPath" ]; then
             echo "$user" >> "$userConfFinalPath"
         done
     fi
+    
+    if [ -n "$CM_USER" ]; then
+        # Append users from environment variable to final config
+        log "$tagv appending emberone user to final config file"
+        IFS=" " read -r -a usersFromEnv <<< "$CM_USER"
+        for user in "${usersFromEnv[@]}"; do
+            echo "$user" >> "$userConfFinalPath"
+        done
+    fi
 
     # Check that we have users in config
     if [ -f "$userConfFinalPath" ] && [ "$(wc -l < "$userConfFinalPath")" -gt 0 ]; then
