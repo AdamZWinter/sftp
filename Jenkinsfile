@@ -1,8 +1,6 @@
 //Jenkinsfile (Declarative Pipeline)
 pipeline {
-    agent { 
-        label 'docker-agent'
-    }
+    agent { label 'docker-agent' }
     stages {
         stage('build') {
             steps {
