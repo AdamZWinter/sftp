@@ -1,13 +1,12 @@
 //Jenkinsfile (Declarative Pipeline)
 pipeline {
-    agent { docker { image 'php:8.1.4-alpine' } }
+    agent any
     stages {
         stage('build') {
             steps {
-                sh 'php --version'
-                sh 'echo test'
+                sh 'docker build -t grcccontainerregistry.azurecr.io/sftp01/sftptest:0.01 -f Dockerfile .'
+                sh 'echo built'
             }
         }
     }
 }
-//test
