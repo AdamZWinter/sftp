@@ -3,7 +3,7 @@ pipeline {
     agent { label 'docker-agent' }
 
     environment {
-        AZURE_SUBSCRIPTION_ID='3c68ec60-baa5-4aa9-8232-e020e8ef4ff4'
+        AZURE_SUBSCRIPTION_ID='e7df41d1-c6b8-476e-a15e-bd947f424c1f'
         AZURE_TENANT_ID='fa40663e-9727-4978-9bce-776cf824bca5'
         CONTAINER_REGISTRY='grcccontainerregistry'
         RESOURCE_GROUP='crrg'
