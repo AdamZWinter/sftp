@@ -12,9 +12,16 @@ terraform {
 
 provider "azurerm" {
   features {}
+  
+  client_id       = var.clientid
+  client_secret   = var.clientsecret
+  subscription_id = var.subscriptionid
+  tenant_id       = tenantid
 }
 
 resource "azurerm_resource_group" "mylabelforrg" {
   name     = "myTFResourceGroup"
   location = "westus2"
+  
+  
 }
