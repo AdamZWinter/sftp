@@ -24,10 +24,10 @@ pipeline {
                     sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
                     sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
                     
-                    sh 'export ARM_CLIENT_ID=$AZURE_CLIENT_ID'
-                    sh 'export ARM_CLIENT_SECRET=$AZURE_CLIENT_SECRET'
-                    sh 'export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
-                    sh 'export ARM_TENANT_ID=$AZURE_TENANT_ID'
+                    sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
+                    sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
+                    sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
+                    sh 'export TF_VAR_tenantid=$AZURE_TENANT_ID'
                     
                     sh 'terraform init'
                     sh 'terraform fmt'
