@@ -8,25 +8,25 @@ terraform {
   }
 }
 
-variable "client_id" {
+variable "SP_CLIENT_ID" {
   description = "Azure Client ID"
   type        = string
   sensitive   = true
 }
 
-variable "client_secret" {
+variable "SP_CLIENT_SECRET" {
   description = "Azure Client Service Principal Secret"
   type        = string
   sensitive   = true
 }
 
-variable "subscription_id" {
+variable "SUBSCRIPTION_ID" {
   description = "Azure Subscription ID"
   type        = string
   sensitive   = true
 }
 
-variable "tenant_id" {
+variable "SP_TENANT_ID" {
   description = "Azure Tenant ID"
   type        = string
   sensitive   = true
