@@ -33,6 +33,7 @@ pipeline {
                     sh 'terraform init'
                     sh 'terraform fmt'
                     sh 'terraform validate'
+                    sh 'terraform plan -var'
                     sh 'terraform apply'
                     sh 'terraform show'
                     sh 'terraform state list'
