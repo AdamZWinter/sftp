@@ -126,7 +126,7 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
       eouser  = [EO_USER, "passwordtest"]
       mnsuser = [MNS_USER, "passwordtest"]
       knnuser = [KNN_USER, "passwordtest"]
-      cmuser  = [CM_USER   = "passwordtest"]
+      cmuser  = [CM_USER, "passwordtest"]
     }
   }
   
