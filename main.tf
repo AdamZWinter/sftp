@@ -68,6 +68,7 @@ resource "azurerm_public_ip" "resourceTrackingNamePublicIPone" {
 
 resource "azurerm_lb" "resourceTrackingNameTestLB" {
   name                = "sftptestloadbalancer"
+  sku                 = "Standard"
   resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
   location            = azurerm_resource_group.resourceTrackingNameRG.location
 
