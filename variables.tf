@@ -21,3 +21,10 @@ variable "tenantid" {
   type        = string
   sensitive   = true
 }
+
+variable "testpassword" {
+  description = "Generic Global Test Password"
+  type        = string
+  sensitive   = true
+}
+
