@@ -105,6 +105,13 @@ resource "azurerm_lb_backend_address_pool_address" "poolAddressFour" {
   ip_address              = "10.10.1.4"
 }
 
+resource "azurerm_lb_probe" "sshprobe" {
+  loadbalancer_id         = azurerm_lb.resourceTrackingNameTestLB.id
+  name                    = "ssh-running-probe"
+  port                    = 22
+  interval_in_seconds     = 30
+}
+
 resource "azurerm_lb_rule" "loadBalancerRule" {
   loadbalancer_id                = azurerm_lb.resourceTrackingNameTestLB.id
   name                           = "LBRule22"
@@ -112,13 +119,8 @@ resource "azurerm_lb_rule" "loadBalancerRule" {
   frontend_port                  = 22
   backend_port                   = 22
   frontend_ip_configuration_name = "sftptestFEIPConfig4LB"
-}
-
-resource "azurerm_lb_probe" "sshprobe" {
-  loadbalancer_id         = azurerm_lb.resourceTrackingNameTestLB.id
-  name                    = "ssh-running-probe"
-  port                    = 22
-  interval_in_seconds     = 30
+  backend_address_pool_ids       = azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id
+  probe_id                       = azurerm_lb_probe.sshprobe.id
 }
 
 resource "azurerm_network_profile" "containergroup_profile" {
