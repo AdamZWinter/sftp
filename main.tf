@@ -19,6 +19,4 @@ provider "azurerm" {
 resource "azurerm_resource_group" "resourceNameTFscopeOnly" {
   name     = "myTFResourceGroup"
   location = "westus2"
-  
-  
 }
