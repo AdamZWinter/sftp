@@ -118,6 +118,7 @@ resource "azurerm_lb_probe" "sshprobe" {
   loadbalancer_id         = azurerm_lb.resourceTrackingNameTestLB.id
   name                    = "ssh-running-probe"
   port                    = 22
+  interval_in_seconds     = 30
 }
 
 resource "azurerm_network_profile" "containergroup_profile" {
