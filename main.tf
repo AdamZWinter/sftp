@@ -17,7 +17,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "resourceTrackingNameRG" {
-  name     = "sftpResourceGroup"
+  name     = "sftpResourceGroupUSwest3"
   location = "westus3"
 }
 
@@ -73,3 +73,57 @@ resource "azurerm_lb" "resourceTrackingNameTestLB" {
   } 
 }
 
+resource "azurerm_network_profile" "containergroup_profile" {
+  name                = "acg-profile"
+  resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
+  location            = azurerm_resource_group.resourceTrackingNameRG.location
+
+  container_network_interface {
+    name = "acg-nic"
+
+    ip_configuration {
+      name      = "aciipconfig"
+      subnet_id = azurerm_subnet.resourceTrackingNameSubnetone.id
+    }
+  }
+}
+
+data "azurerm_container_registry" "acr" {
+  name                = "ArcticaCR"
+  resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
+}
+
+resource "azurerm_container_group" "resourceTrackingNameContainer" {
+  name                = "sftptestcontainer"
+  resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
+  location            = azurerm_resource_group.resourceTrackingNameRG.location
+  ip_address_type     = "Private"
+  os_type             = "Linux"
+  network_profile_id  = azurerm_network_profile.containergroup_profile.id
+  image_registry_credential {
+    username = data.azurerm_container_registry.acr.admin_username
+    password = data.azurerm_container_registry.acr.admin_password
+    server   = data.azurerm_container_registry.acr.login_server
+  }
+
+  container {
+    name   = "mycontainername001"
+    image  = "arcticacr.azurecr.io/sftp01/sftptest:0.01"
+    cpu    = "1.0"
+    memory = "2.0"
+
+    ports {
+      port     = 22
+      protocol = "TCP"
+    }
+    
+    //environment_variables = {
+      //<add your variables here>
+    //}
+  }
+  
+  
+  tags = {
+    environment = "testing"
+  }
+}
