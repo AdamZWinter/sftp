@@ -20,15 +20,15 @@ pipeline {
                 
                 withCredentials([usernamePassword(credentialsId: 'grcccontainerregistryCreds', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
                     
-                    sh 'export SP_CLIENT_ID=$AZURE_CLIENT_ID'
-                    sh 'export SP_CLIENT_SECRET=$AZURE_CLIENT_SECRET'
-                    sh 'export SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
-                    sh 'export SP_TENANT_ID=$AZURE_TENANT_ID'
+                    //sh 'export SP_CLIENT_ID=$AZURE_CLIENT_ID'
+                    //sh 'export SP_CLIENT_SECRET=$AZURE_CLIENT_SECRET'
+                    //sh 'export SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
+                    //sh 'export SP_TENANT_ID=$AZURE_TENANT_ID'
                     
-                    //sh 'export ARM_CLIENT_ID=$AZURE_CLIENT_ID'
-                    //sh 'export ARM_CLIENT_SECRET=$AZURE_CLIENT_SECRET'
-                    //sh 'export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
-                    //sh 'export ARM_TENANT_ID=$AZURE_TENANT_ID'
+                    sh 'export ARM_CLIENT_ID=$AZURE_CLIENT_ID'
+                    sh 'export ARM_CLIENT_SECRET=$AZURE_CLIENT_SECRET'
+                    sh 'export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
+                    sh 'export ARM_TENANT_ID=$AZURE_TENANT_ID'
                     
                     //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
                     //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
