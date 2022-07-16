@@ -70,7 +70,6 @@ resource "azurerm_lb" "resourceTrackingNameTestLB" {
   frontend_ip_configuration {
     name                 = "sftptestFEIPConfig4LB"
     public_ip_address_id = azurerm_public_ip.resourceTrackingNamePublicIPone.id
-    subnet_id            = azurerm_subnet.resourceTrackingNameSubnetzero.id
   } 
 }
 
