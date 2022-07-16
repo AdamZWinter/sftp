@@ -17,7 +17,13 @@ pipeline {
                 //sh 'echo built'
                 
                 withCredentials([
-                    file(credentialsId: 'AZJenkinsSecretsFileSub1b39', AZ_SUBSCRIPTION: 'TF_VAR_subscriptionid', AZ_TENANT: 'TF_VAR_tenantid', AZ_PASSWORD: 'TF_VAR_clientsecret', AZ_CLIENT: 'TF_VAR_clientid'),
+                    file(credentialsId: 'AZJenkinsSecretsFileSub1b39', variable: 'FILE'), 
+                        [
+                            AZ_SUBSCRIPTION: 'TF_VAR_subscriptionid', 
+                            AZ_TENANT: 'TF_VAR_tenantid', 
+                            AZ_PASSWORD: 'TF_VAR_clientsecret', 
+                            AZ_CLIENT: 'TF_VAR_clientid'
+                        ],
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
                         //sh 'env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID'
