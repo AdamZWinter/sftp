@@ -57,6 +57,7 @@ resource "azurerm_subnet" "resourceTrackingNameSubnetzero" {
 
 resource "azurerm_public_ip" "resourceTrackingNamePublicIPone" {
   name                = "sftptestpublicip"
+  sku                 = "Standard"
   resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
   location            = azurerm_resource_group.resourceTrackingNameRG.location
   allocation_method   = "Static"
@@ -67,7 +68,7 @@ resource "azurerm_public_ip" "resourceTrackingNamePublicIPone" {
 }
 
 resource "azurerm_lb" "resourceTrackingNameTestLB" {
-  name                = "sftpteststandardloadbalancer"
+  name                = "sftptestloadbalancer"
   sku                 = "Standard"
   resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
   location            = azurerm_resource_group.resourceTrackingNameRG.location
