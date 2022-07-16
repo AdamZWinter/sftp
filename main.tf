@@ -121,9 +121,13 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
       protocol = "TCP"
     }
     
-    //environment_variables = {
-      //<add your variables here>
-    //}
+    environment_variables = {
+      VSS_USER  = "passwordtest"
+      EO_USER   = "passwordtest"
+      MNS_USER  = "passwordtest"
+      KNN_USER  = "passwordtest"
+      CM_USER   = "passwordtest"
+    }
   }
   
   
