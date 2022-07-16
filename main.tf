@@ -16,7 +16,7 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "RGnameTFscopeOnly" {
+resource "azurerm_resource_group" "resourceNameTFscopeOnly" {
   name     = "myTFResourceGroup"
   location = "westus2"
   
