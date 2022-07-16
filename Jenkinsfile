@@ -22,8 +22,8 @@ pipeline {
                     usernamePassword(credentialsId: 'sftpServicePrincipalCreds', passwordVariable: 'TF_VAR_clientsecret', usernameVariable: 'TF_VAR_clientid'),
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
-                        env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID
-                        env.TF_VAR_tenantid = env.AZURE_TENANT_ID
+                        sh 'env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID'
+                        sh 'env.TF_VAR_tenantid = env.AZURE_TENANT_ID'
                     
                     //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
                     //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
