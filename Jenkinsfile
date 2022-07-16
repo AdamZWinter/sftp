@@ -20,10 +20,10 @@ pipeline {
                 
                 withCredentials([usernamePassword(credentialsId: 'grcccontainerregistryCreds', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
                     
-                    sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
-                    sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
-                    sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
-                    sh 'export TF_VAR_tenantid=$AZURE_TENANT_ID'
+                    //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
+                    //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
+                    //sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
+                    //sh 'export TF_VAR_tenantid=$AZURE_TENANT_ID && echo $TF_VAR_tenantid'
                     
                     //sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
                     //sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
@@ -36,7 +36,12 @@ pipeline {
                     sh 'terraform init'
                     sh 'terraform fmt'
                     sh 'terraform validate'
-                    sh 'terraform apply -auto-approve -no-color'
+                    
+                    sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID \
+                        && export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET \
+                        && export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID \
+                        && export TF_VAR_tenantid=$AZURE_TENANT_ID && echo $TF_VAR_tenantid \
+                        && terraform apply -auto-approve -no-color'
                     
                     //If I pass the variables this way, it works fine.
                     //sh 'terraform apply -auto-approve -no-color -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
