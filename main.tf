@@ -122,11 +122,11 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
     }
     
     environment_variables = {
-      VSS_USER  = "passwordtest"
-      EO_USER   = "passwordtest"
-      MNS_USER  = "passwordtest"
-      KNN_USER  = "passwordtest"
-      CM_USER   = "passwordtest"
+      vss     = [VSS_USER, "passwordtest"]
+      eouser  = [EO_USER, "passwordtest"]
+      mnsuser = [MNS_USER, "passwordtest"]
+      knnuser = [KNN_USER, "passwordtest"]
+      cmuser  = [CM_USER   = "passwordtest"]
     }
   }
   
