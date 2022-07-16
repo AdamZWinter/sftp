@@ -168,11 +168,11 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
     }
     
     environment_variables = {
-      "VSS_USER" : "adam:var.testpassword"
-      "EO_USER"  : "dummy1:var.passwordtest"
-      "MNS_USER" : "dummy2:var.passwordtest"
-      "KNN_USER" : "dummy3:var.passwordtest"
-      "CM_USER"  : "dummy4:var.passwordtest"
+      "VSS_USER" : "adam:"."${var.testpassword}"
+      "EO_USER"  : "dummy1:"."${var.passwordtest}"
+      "MNS_USER" : "dummy2:"."${var.passwordtest}"
+      "KNN_USER" : "dummy3:"."${var.passwordtest}"
+      "CM_USER"  : "dummy4:"."${var.passwordtest}"
     }
   }
   
