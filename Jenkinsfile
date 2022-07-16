@@ -30,10 +30,11 @@ pipeline {
                     //sh 'export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID'
                     //sh 'export ARM_TENANT_ID=$AZURE_TENANT_ID'
                     
-                    sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
-                    sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
-                    sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
+                    //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
+                    //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
+                    //sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
                     sh 'export TF_VAR_tenantid=$AZURE_TENANT_ID'
+                    sh 'echo $TF_VAR_tenantid'
                     
                     //sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
                     //sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
@@ -44,7 +45,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     //sh 'terraform plan'
-                    sh 'terraform apply'
+                    sh 'terraform apply -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
                     sh 'terraform show'
                     sh 'terraform state list'
                         }
