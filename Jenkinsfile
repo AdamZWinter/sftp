@@ -45,7 +45,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    sh 'terraform apply -auto-approve -no-color'
+                    sh 'terraform apply -auto-approve -no-color -var testpassword=$TEST_PASSWORD'
                     
                     //If I pass the variables this way, it works fine.
                     //sh 'terraform apply -auto-approve -no-color \
