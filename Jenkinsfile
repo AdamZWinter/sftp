@@ -19,9 +19,11 @@ pipeline {
                 //sh 'echo built'
                 
                 withCredentials([
-                    usernamePassword(credentialsId: 'sftpServicePrincipalCreds', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID'),
+                    usernamePassword(credentialsId: 'sftpServicePrincipalCreds', passwordVariable: 'TF_VAR_clientsecret', usernameVariable: 'TF_VAR_clientid'),
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
+                        env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID
+                        env.TF_VAR_tenantid = env.AZURE_TENANT_ID
                     
                     //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
                     //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
@@ -41,15 +43,15 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    //sh 'terraform apply -auto-approve -no-color'
+                    sh 'terraform apply -auto-approve -no-color'
                     
                     //If I pass the variables this way, it works fine.
-                    sh 'terraform apply -auto-approve -no-color \
-                        -var clientid=$AZURE_CLIENT_ID \
-                        -var clientsecret=$AZURE_CLIENT_SECRET \
-                        -var subscriptionid=$AZURE_SUBSCRIPTION_ID \
-                        -var tenantid=$AZURE_TENANT_ID \
-                        -var testpassword=$TEST_PASSWORD'
+                    //sh 'terraform apply -auto-approve -no-color \
+                    //    -var clientid=$AZURE_CLIENT_ID \
+                    //    -var clientsecret=$AZURE_CLIENT_SECRET \
+                    //    -var subscriptionid=$AZURE_SUBSCRIPTION_ID \
+                    //    -var tenantid=$AZURE_TENANT_ID \
+                    //    -var testpassword=$TEST_PASSWORD'
                     
                     sh 'terraform show'
                     sh 'terraform state list'
