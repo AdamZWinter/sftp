@@ -22,7 +22,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "resourceTrackingNameRG" {
   name     = "sftpResourceGroupUSwest3"
-  location = "westus3"
+  location = "eastus2"
 }
 
 # Create a virtual network within the resource group
