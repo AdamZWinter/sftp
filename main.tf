@@ -119,7 +119,7 @@ resource "azurerm_lb_rule" "loadBalancerRule" {
   frontend_port                  = 22
   backend_port                   = 22
   frontend_ip_configuration_name = "sftptestFEIPConfig4LB"
-  backend_address_pool_ids       = azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id]
   probe_id                       = azurerm_lb_probe.sshprobe.id
 }
 
