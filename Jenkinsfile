@@ -5,10 +5,10 @@ pipeline {
     environment {
         SECRET_FILE_ID = credentials('AZJenkinsSecretsFileSub1b39')
         
-        TF_VAR_subscriptionid = var.SECRET_FILE_ID.AZ_SUBSCRIPTION
-        TF_VAR_tenantid = var.SECRET_FILE_ID.AZ_TENANT
-        TF_VAR_clientsecret = var.SECRET_FILE_ID.AZ_PASSWORD
-        TF_VAR_clientid = var.SECRET_FILE_ID.AZ_CLIENT
+        TF_VAR_subscriptionid = '${SECRET_FILE_ID.AZ_SUBSCRIPTION}'
+        TF_VAR_tenantid = '${SECRET_FILE_ID.AZ_TENANT}'
+        TF_VAR_clientsecret = '${SECRET_FILE_ID.AZ_PASSWORD}'
+        TF_VAR_clientid = '${SECRET_FILE_ID.AZ_CLIENT}'
         
         //TF_VAR_subscriptionid = credentials('AZ_SUBSCRIPTION')
         //TF_VAR_tenantid = credentials('AZ_TENANT')
