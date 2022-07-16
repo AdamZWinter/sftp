@@ -33,7 +33,7 @@ pipeline {
                     sh 'terraform init'
                     sh 'terraform fmt'
                     sh 'terraform validate'
-                    sh 'terraform apply -auto-approve -no-color
+                    sh 'terraform apply -auto-approve -no-color'
                     
                     //If I pass the variables this way, it works fine.
                     //sh 'terraform apply -auto-approve -no-color -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
