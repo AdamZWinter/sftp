@@ -94,7 +94,7 @@ resource "azurerm_network_profile" "containergroup_profile" {
 
 data "azurerm_container_registry" "acr" {
   name                = "ArcticaCR"
-  resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
+  resource_group_name = "crrg"
 }
 
 resource "azurerm_container_group" "resourceTrackingNameContainer" {
