@@ -30,21 +30,17 @@ pipeline {
                     //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
                     //sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
                     
-                    sh 'export TF_LOG=DEBUG'
-                    sh 'TF_LOG_PATH=/home/jenkins/terraform-debug.log'
+                    //sh 'export TF_LOG=DEBUG'
+                    //sh 'TF_LOG_PATH=/home/jenkins/terraform-debug.log'
                     
                     sh 'terraform init'
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID \
-                        && export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET \
-                        && export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID \
-                        && export TF_VAR_tenantid=$AZURE_TENANT_ID && echo $TF_VAR_tenantid \
-                        && terraform apply -auto-approve -no-color'
+                    //sh 'terraform apply -auto-approve -no-color'
                     
                     //If I pass the variables this way, it works fine.
-                    //sh 'terraform apply -auto-approve -no-color -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
+                    sh 'terraform apply -auto-approve -no-color -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
                     
                     sh 'terraform show'
                     sh 'terraform state list'
