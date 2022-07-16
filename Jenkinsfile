@@ -48,6 +48,7 @@ pipeline {
                     
                     sh 'terraform show'
                     sh 'terraform state list'
+                    //sh 'terraform import azurerm_lb.sftptestloadbalancer /subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/sftpResourceGroup/providers/Microsoft.Network/loadBalancers/sftptestloadbalancer'
                         }
             }
         }
