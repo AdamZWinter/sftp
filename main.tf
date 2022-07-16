@@ -13,7 +13,11 @@ provider "azurerm" {
   client_secret   = var.clientsecret
   subscription_id = var.subscriptionid
   tenant_id       = var.tenantid
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
 
 resource "azurerm_resource_group" "resourceTrackingNameRG" {
