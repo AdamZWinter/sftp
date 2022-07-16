@@ -30,6 +30,9 @@ pipeline {
                     //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
                     //sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
                     
+                    sh 'export TF_LOG=”DEBUG"'
+                    sh 'TF_LOG_PATH="/home/jenkins/terraform-debug.log"'
+                    
                     sh 'terraform init'
                     sh 'terraform fmt'
                     sh 'terraform validate'
