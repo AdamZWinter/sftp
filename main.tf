@@ -82,6 +82,20 @@ resource "azurerm_lb_backend_address_pool" "resourceTrackingNameTestLBBEpool" {
   name            = "sftptestBackEndAddressPool"
 }
 
+resource "azurerm_lb_backend_address_pool_address" "poolAddressTwo" {
+  name                    = "PoolAddressTwo"
+  backend_address_pool_id = resource.azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id
+  virtual_network_id      = resource.azurerm_virtual_network.resourceTrackingNameVnet.id
+  ip_address              = "10.10.1.2"
+}
+
+resource "azurerm_lb_backend_address_pool_address" "poolAddressThree" {
+  name                    = "PoolAddressThree"
+  backend_address_pool_id = resource.azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id
+  virtual_network_id      = resource.azurerm_virtual_network.resourceTrackingNameVnet.id
+  ip_address              = "10.10.1.3"
+}
+
 resource "azurerm_lb_backend_address_pool_address" "poolAddressFour" {
   name                    = "PoolAddressFour"
   backend_address_pool_id = resource.azurerm_lb_backend_address_pool.resourceTrackingNameTestLBBEpool.id
@@ -114,7 +128,6 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
   resource_group_name = azurerm_resource_group.resourceTrackingNameRG.name
   location            = azurerm_resource_group.resourceTrackingNameRG.location
   ip_address_type     = "Private"
-  ip_address          = "10.10.1.4"
   os_type             = "Linux"
   network_profile_id  = azurerm_network_profile.containergroup_profile.id
   image_registry_credential {
