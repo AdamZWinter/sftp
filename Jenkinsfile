@@ -25,11 +25,11 @@ pipeline {
                     //sh 'export TF_VAR_subscriptionid=$AZURE_SUBSCRIPTION_ID'
                     //sh 'export TF_VAR_tenantid=$AZURE_TENANT_ID && echo $TF_VAR_tenantid'
                     
-                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-                    sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
-                    sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
-                    sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
-                    sh 'az logout'
+                    //sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                    //sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
+                    //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
+                    //sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
+                    //sh 'az logout'
                     
                     //sh 'export TF_LOG=DEBUG'
                     //sh 'TF_LOG_PATH=/home/jenkins/terraform-debug.log'
