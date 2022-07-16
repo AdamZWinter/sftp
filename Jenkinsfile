@@ -45,7 +45,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     //sh 'terraform plan'
-                    sh 'terraform apply -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
+                    sh 'terraform apply -auto-approve -no-color -var clientid=$AZURE_CLIENT_ID -var clientsecret=$AZURE_CLIENT_SECRET -var subscriptionid=$AZURE_SUBSCRIPTION_ID -var tenantid=$AZURE_TENANT_ID'
                     sh 'terraform show'
                     sh 'terraform state list'
                         }
