@@ -3,17 +3,17 @@ pipeline {
     agent { label 'docker-agent' }
 
     environment {
-        SECRET_FILE_ID = credentials('AZJenkinsSecretsFileSub1b39')
+        SECRET_TEXT = credentials('AZsecrettext')
         
         //TF_VAR_subscriptionid = '${SECRET_FILE_ID.AZ_SUBSCRIPTION}'
         //TF_VAR_tenantid = '${SECRET_FILE_ID.AZ_TENANT}'
         //TF_VAR_clientsecret = '${SECRET_FILE_ID.AZ_PASSWORD}'
         //TF_VAR_clientid = '${SECRET_FILE_ID.AZ_CLIENT}'
         
-        TF_VAR_subscriptionid = credentials('AZ_SUBSCRIPTION')
+        //TF_VAR_subscriptionid = credentials('AZ_SUBSCRIPTION')
         //TF_VAR_tenantid = credentials('AZ_TENANT')
-        TF_VAR_clientsecret = credentials('AZ_PASSWORD')
-        TF_VAR_clientid = credentials('AZ_CLIENT')
+        //TF_VAR_clientsecret = credentials('AZ_PASSWORD')
+        //TF_VAR_clientid = credentials('AZ_CLIENT')
         
         CONTAINER_REGISTRY='ArcticaCR'
         RESOURCE_GROUP='crrg'
@@ -31,8 +31,6 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
-                        //sh 'env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID'
-                        //sh 'env.TF_VAR_tenantid = env.AZURE_TENANT_ID'
                     
                     //sh 'export TF_VAR_clientid=$AZURE_CLIENT_ID'
                     //sh 'export TF_VAR_clientsecret=$AZURE_CLIENT_SECRET'
@@ -52,7 +50,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    sh 'terraform apply -auto-approve -no-color -var testpassword=$TEST_PASSWORD'
+                    sh 'terraform apply -auto-approve -no-color $SECRET_TEXT'
                     
                     //If I pass the variables this way, it works fine.
                     //sh 'terraform apply -auto-approve -no-color \
