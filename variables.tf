@@ -1,23 +1,23 @@
 variable "clientid" {
-  description = "Azure Client ID"
+  description = "Azure Client ID Password"
   type        = string
   sensitive   = true
 }
 
 variable "clientsecret" {
-  description = "Azure Client Service Principal Secret"
+  description = "Azure Client Service Principal Secret Password"
   type        = string
   sensitive   = true
 }
 
 variable "subscriptionid" {
-  description = "Azure Subscription ID"
+  description = "Azure Subscription ID Password"
   type        = string
   sensitive   = true
 }
 
 variable "tenantid" {
-  description = "Azure Tenant ID"
+  description = "Azure Tenant ID Password"
   type        = string
   sensitive   = true
 }
