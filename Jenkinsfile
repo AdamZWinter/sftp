@@ -35,8 +35,9 @@ pipeline {
                     //sh 'az logout'
                     
                     sh 'az login --service-principal -u $TF_VAR_clientid -p $TF_VAR_clientsecret -t $TF_VAR_tenantid'
-                    sh 'az account set -s $TF_VAR_subscriptionid'
-                    sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
+                    //sh 'az account set -s $TF_VAR_subscriptionid'
+                    //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
+                    sh 'az acr login --name $CONTAINER_REGISTRY'
                     sh 'docker push ${CONTAINER}'
                     sh 'az logout'
                     
