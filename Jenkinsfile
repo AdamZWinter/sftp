@@ -4,7 +4,7 @@ pipeline {
     environment {
         //TF_LOG='DEBUG'
         TF_LOG_PATH='/home/jenkins/terraform-debug.log'
-        CONTAINER_REGISTRY='ArcticaCR'
+        CONTAINER_REGISTRY='arcticacr'
         RESOURCE_GROUP='crrg'
         REPO='sftp01'
         IMAGE_NAME='sftptest'
