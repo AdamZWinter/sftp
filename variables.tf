@@ -28,7 +28,7 @@ variable "testpassword" {
   sensitive   = true
 }
 
-variable "containertag" {
-  description = "tag version for container"
+variable "container" {
+  description = "container tag"
   type        = string
 }
