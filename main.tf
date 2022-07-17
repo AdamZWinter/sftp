@@ -158,7 +158,7 @@ resource "azurerm_container_group" "resourceTrackingNameContainer" {
 
   container {
     name   = "mycontainername001"
-    image  = "arcticacr.azurecr.io/sftp01/sftptest:0.01"
+    image  = "${var.container}"
     cpu    = "1.0"
     memory = "2.0"
 
