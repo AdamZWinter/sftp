@@ -3,7 +3,7 @@ pipeline {
     agent { label 'docker-agent' }
 
     environment {
-        SECRET_TEXT = credentials('AZsecrettext')
+        SECRET_TEXT = credentials('AZTFargumentsPassword')
         
         //TF_VAR_subscriptionid = '${SECRET_FILE_ID.AZ_SUBSCRIPTION}'
         //TF_VAR_tenantid = '${SECRET_FILE_ID.AZ_TENANT}'
@@ -50,7 +50,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    sh 'terraform apply -auto-approve -no-color $SECRET_TEXT'
+                    sh 'terraform apply -auto-approve -no-color $SECRET_TEXT_PSW'
                     
                     //If I pass the variables this way, it works fine.
                     //sh 'terraform apply -auto-approve -no-color \
