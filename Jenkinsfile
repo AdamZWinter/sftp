@@ -22,12 +22,10 @@ pipeline {
                     usernamePassword(credentialsId: 'AzureTenantSubscription', passwordVariable: 'TF_VAR_tenantid', usernameVariable: 'TF_VAR_subscriptionid'),
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
-                    //sh 'env.TF_VAR_subscriptionid = env.AZURE_SUBSCRIPTION_ID'
-                    //sh 'env.TF_VAR_tenantid = env.AZURE_TENANT_ID'
-                    script{
-                    env.AZURE_SUBSCRIPTION_ID = env.TF_VAR_subscriptionid
-                    env.AZURE_TENANT_ID = env.TF_VAR_tenantid
-                    }
+                    //script{
+                    //env.AZURE_SUBSCRIPTION_ID = env.TF_VAR_subscriptionid
+                    //env.AZURE_TENANT_ID = env.TF_VAR_tenantid
+                    //}
                      
                     //sh 'az login --service-principal -u $TF_VAR_clientid -p $TF_VAR_clientsecret -t $TF_VAR_tenantid'
                     //sh 'az account set -s $TF_VAR_subscriptionid'
