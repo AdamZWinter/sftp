@@ -21,6 +21,7 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'sftpServicePrincipalCreds', passwordVariable: 'TF_VAR_clientsecret', usernameVariable: 'TF_VAR_clientid'),
                     usernamePassword(credentialsId: 'AzureTenantSubscription', passwordVariable: 'TF_VAR_tenantid', usernameVariable: 'TF_VAR_subscriptionid'),
+                    usernamePassword(credentialsId: 'ArcticaCRcreds', passwordVariable: 'CR_PASSWORD', usernameVariable: 'CR_USERNAME'),
                     usernamePassword(credentialsId: 'passwordtestCreds', passwordVariable: 'TEST_PASSWORD', usernameVariable: 'TEST_USERNAME')
                 ]) {
                     //script{
@@ -34,7 +35,7 @@ pipeline {
                     //sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
                     //sh 'az logout'
                     
-                    sh 'az login --service-principal -u $TF_VAR_clientid -p $TF_VAR_clientsecret -t $TF_VAR_tenantid'
+                    sh 'az login --service-principal -u $CR_USERNAME -p $CR_PASSWORD -t $TF_VAR_tenantid'
                     //sh 'az account set -s $TF_VAR_subscriptionid'
                     //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
                     sh 'az acr login --name $CONTAINER_REGISTRY'
