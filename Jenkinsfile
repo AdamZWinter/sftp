@@ -44,7 +44,7 @@ pipeline {
                     sh 'terraform fmt'
                     sh 'terraform validate'
                     
-                    sh 'terraform apply -auto-approve -no-color -var testpassword=$TEST_PASSWORD'
+                    sh 'terraform apply -auto-approve -no-color -var testpassword=$TEST_PASSWORD -var containertag=$TAG'
      
                     sh 'terraform show'
                     sh 'terraform state list'
