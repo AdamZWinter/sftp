@@ -2,8 +2,8 @@
 pipeline {
     agent { label 'docker-agent' }
     environment {
-        TF_LOG=DEBUG
-        TF_LOG_PATH=/home/jenkins/terraform-debug.log
+        TF_LOG='DEBUG'
+        TF_LOG_PATH='/home/jenkins/terraform-debug.log'
         //AZURE_SUBSCRIPTION_ID='1b395c3d-0862-40fe-8e4b-3d49360960ed'
         //AZURE_TENANT_ID='25705655-d5cb-4276-b67b-62935168d950'
         //TF_VAR_subscriptionid='1b395c3d-0862-40fe-8e4b-3d49360960ed'
