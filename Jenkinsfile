@@ -6,16 +6,17 @@ pipeline {
         TF_LOG_PATH='/home/jenkins/terraform-debug.log'
         CONTAINER_REGISTRY='ArcticaCR'
         RESOURCE_GROUP='crrg'
-        REPO="sftp01"
-        IMAGE_NAME="sftptest"
-        TAG="0.01"
+        REPO='sftp01'
+        IMAGE_NAME='sftptest'
+        TAG='0.02'
+        CONTAINER="${CONTAINER_REGISTRY}.azurecr.io/${REPO}/${IMAGE_NAME}:${TAG}"
     }
     
     stages {
         stage('build') {
             steps {
-                //sh 'docker build -t ArcticaCR.azurecr.io/sftp01/sftptest:0.01 -f Dockerfile .'
-                //sh 'echo built'
+                sh 'docker build -t ${CONTAINER} -f Dockerfile .'
+                sh 'echo built ${CONTAINER}'
                 
                 withCredentials([
                     usernamePassword(credentialsId: 'sftpServicePrincipalCreds', passwordVariable: 'TF_VAR_clientsecret', usernameVariable: 'TF_VAR_clientid'),
@@ -32,6 +33,12 @@ pipeline {
                     //sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
                     //sh 'az acr build --image $REPO/$IMAGE_NAME:$TAG --registry $CONTAINER_REGISTRY --file Dockerfile . '
                     //sh 'az logout'
+                    
+                    sh 'az login --service-principal -u $TF_VAR_clientid -p $TF_VAR_clientsecret -t $TF_VAR_tenantid'
+                    sh 'az account set -s $TF_VAR_subscriptionid'
+                    sh 'az acr login --name $CONTAINER_REGISTRY --resource-group $RESOURCE_GROUP'
+                    sh 'docker push ${CONTAINER}'
+                    sh 'az logout'
                     
                     sh 'terraform init'
                     sh 'terraform fmt'
