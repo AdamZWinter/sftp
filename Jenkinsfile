@@ -2,7 +2,7 @@
 pipeline {
     agent { label 'docker-agent' }
     environment {
-        TF_LOG='DEBUG'
+        //TF_LOG='DEBUG'
         TF_LOG_PATH='/home/jenkins/terraform-debug.log'
         CONTAINER_REGISTRY='ArcticaCR'
         RESOURCE_GROUP='crrg'
