@@ -3,7 +3,7 @@ pipeline {
     agent { label 'docker-agent' }
 
     environment {
-        SECRET_TEXT = credentials('secretsfile')
+        SECRET_TEXT = credentials('AZsecrettext')
         
         //TF_VAR_subscriptionid = '${SECRET_FILE_ID.AZ_SUBSCRIPTION}'
         //TF_VAR_tenantid = '${SECRET_FILE_ID.AZ_TENANT}'
