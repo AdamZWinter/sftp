@@ -8,7 +8,7 @@ pipeline {
         RESOURCE_GROUP='crrg'
         REPO='sftp01'
         IMAGE_NAME='sftptest'
-        TAG='0.02'
+        TAG='0.03'
         CONTAINER="${CONTAINER_REGISTRY}.azurecr.io/${REPO}/${IMAGE_NAME}:${TAG}"
     }
     
