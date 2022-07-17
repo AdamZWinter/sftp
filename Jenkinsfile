@@ -3,18 +3,7 @@ pipeline {
     agent { label 'docker-agent' }
 
     environment {
-        SECRET_TEXT = credentials('AZTFargumentsPassword')
-        
-        //TF_VAR_subscriptionid = '${SECRET_FILE_ID.AZ_SUBSCRIPTION}'
-        //TF_VAR_tenantid = '${SECRET_FILE_ID.AZ_TENANT}'
-        //TF_VAR_clientsecret = '${SECRET_FILE_ID.AZ_PASSWORD}'
-        //TF_VAR_clientid = '${SECRET_FILE_ID.AZ_CLIENT}'
-        
-        //TF_VAR_subscriptionid = credentials('AZ_SUBSCRIPTION')
-        //TF_VAR_tenantid = credentials('AZ_TENANT')
-        //TF_VAR_clientsecret = credentials('AZ_PASSWORD')
-        //TF_VAR_clientid = credentials('AZ_CLIENT')
-        
+        SECRET_TEXT = credentials('AZTFargumentsPassword')        
         CONTAINER_REGISTRY='ArcticaCR'
         RESOURCE_GROUP='crrg'
         REPO="sftp01"
